@@ -1,0 +1,26 @@
+<%- include('header') -%>
+
+<body>
+<div class="join-container">
+    <header class="join-header">
+    <h1><i class="fas fa-smile"></i> Yap Chat</h1>
+    </header>
+    <main class="join-main">
+    <form action="/chat-page">
+        <div class="form-control">
+        <label for="username">Username</label>
+        <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter username..."
+            required
+        />
+        </div>
+        <button type="submit" class="btn">Join Chat</button>
+    </form>
+    </main>
+</div>
+</body>
+
+</html>

@@ -1,19 +1,25 @@
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const ejs = require('ejs');
 
+// To store excited messages instead of using DB 
 var localMsg = ['Welcome from yap-chat!'];
 
+// Set public as a local folder to fetch our local html and css files 
 app.use(require('express').static(__dirname + '/public'));
+// Setup view engine template 
+app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-  res.sendFile('index.html');
+  res.render('index');
 });
 
 app.get('/chat-page', (req, res) => {
-  res.sendFile(__dirname + '/public/chat.html');
+  res.render('chat');
 });
 
+// Initialize the socket connection 
 io.on('connection', socket => {
   console.log('A user connected!');
 
