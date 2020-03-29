@@ -2,7 +2,7 @@ const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-var localMsg = [];
+var localMsg = ['Welcome from yap-chat!'];
 
 app.use(require('express').static(__dirname + '/public'));
 
@@ -17,11 +17,11 @@ app.get('/chat-page', (req, res) => {
 io.on('connection', socket => {
   console.log('A user connected!');
 
-socket.emit('restore', localMsg);
+  socket.emit('restore', localMsg);
 
   socket.on('brod', msg => {
-      localMsg.push(msg);
-      console.log('Data pushed into stack ' + msg);
+    localMsg.push(msg);
+    console.log('Data pushed into stack ' + msg);
     io.emit('brod', msg);
   });
 
