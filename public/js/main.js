@@ -5,12 +5,15 @@ const msgContainer = document.querySelector('.chat-messages');
 // Complete the loading page 
 $(document).ready(function() {
   // show user when connected to the group
-  socket.emit('init', 'User is connected!');
+  socket.emit('welcome', 'Welcome to YapChat!');
 
   // Listen when the user is connected
-  socket.on('init', info => {
+  socket.on('welcome', info => {
     $('.chat-messages').append(
-      '<div class = "message">' + `<p class="notify">${info}</p>`
+      '<div class = "message">' +
+        '<p class="text">' +
+        `<p class="meta">${info.username}<span> ${info.time} </span> </p>` +
+        `${info.message} </p>`
     );
 
     // scroll down 
@@ -25,32 +28,14 @@ $(document).ready(function() {
     return false;
   });
 
-  // Listen the restore event
-  socket.on('restore', msg => {
-    console.log(msg);
-
-    // Print all those previous chat messages
-    msg.forEach(restore => {
-      $('.chat-messages').append(
-        '<div class = "message">' +
-          '<p class="text">' +
-          `<p class="meta">Username<span> 9:12pm </span> </p>` +
-          `${restore} </p>`
-      );
-
-      
-    // scroll down 
-    msgContainer.scrollTop = msgContainer.scrollHeight;
-    });
-  });
 
   // Listen broadcast images
   socket.on('brodcast', msg => {
     $('.chat-messages').append(
       '<div class = "message">' +
-        `<p class="meta">username <span> 9:12pm </span> </p>` +
+        `<p class="meta"> ${msg.username} <span> ${msg.time} </span> </p>` +
         '<p class="text">' +
-        `${msg} </p>`
+        `${msg.message} </p>`
     );
 
     // scroll down 

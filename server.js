@@ -2,10 +2,12 @@ const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
-const formatMsg = require('./utils/formatmsg');
+const utils = require('./utils/utilities');
 
 // To store excited messages instead of using DB 
 var localMsg = [];
+
+let reqObject = {};
 
 // Set public as a local folder to fetch our local html and css files 
 app.use(require('express').static(__dirname + '/public'));
@@ -24,11 +26,7 @@ app.get('/', (req, res) => {
 // Get chat route 
 app.get('/chat-page', (req, res) => {
 
-  // var url_parts = url.parse(req.url, true);
-  // var query = url_parts.query;
-
-  // users.push(query.username);
-
+  reqObject = req;
   res.render('chat');
 });
 
@@ -36,8 +34,8 @@ app.get('/chat-page', (req, res) => {
 io.on('connection', socket => {
 
   // listent and send message to all connected users 
-  socket.on('init', msg => {
-    io.emit('init', msg);
+  socket.on('welcome', msg => {
+    socket.emit('welcome', utils.formatMsg('Yap bot', msg));
   });
 
   // Send all previous msg in the stack 
@@ -45,9 +43,9 @@ io.on('connection', socket => {
 
   // Listen when the user is send messages 
   socket.on('brodcast', msg => {
-    localMsg.push(msg);
-    console.log('Data pushed into stack ' + msg);
-    io.emit('brodcast', msg);
+    localMsg.push(utils.formatMsg(utils.getUser(reqObject), msg));
+    console.log('Data pushed into stack ' + utils.formatMsg(utils.getUser(reqObject), msg));
+    io.emit('brodcast', utils.formatMsg(utils.getUser(reqObject), msg));
   });
 
   // Listen when the user is disconneted 
