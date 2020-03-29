@@ -30,6 +30,8 @@ socket.emit('restore', localMsg);
   });
 });
 
-http.listen(4000, () => {
+const PORT = process.env.PORT || 4000;
+
+http.listen(PORT, () => {
   console.log('Server running on port #4000');
 });
