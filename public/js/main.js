@@ -2,10 +2,31 @@
 var socket = io();
 const msgContainer = document.querySelector('.chat-messages');
 
+// Get the user name
+let { username } = Qs.parse(location.search,{
+  ignoreQueryPrefix : true
+});
+
+console.log(username);
+
+
 // Complete the loading page 
 $(document).ready(function() {
+
   // show user when connected to the group
   socket.emit('welcome', 'Welcome to YapChat!');
+
+  // Send the username to server 
+  socket.emit('getUser', username);
+
+  // Listen when the server send by broadcast
+  socket.on('init', info => {
+    $('.chat-messages').append(
+      '<div class = "message">' +
+        `<p class="notify"> ${info} </p>` 
+    );
+
+    });
 
   // Listen when the user is connected
   socket.on('welcome', info => {

@@ -2,63 +2,67 @@ const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
-const utils = require('./utils/utilities');
+const userUtils = require('./utils/users');
+const msgUtils = require('./utils/messages');
 
-// To store excited messages instead of using DB 
-var localMsg = [];
-
-let reqObject = {};
-
-// Set public as a local folder to fetch our local html and css files 
+// Set public as a local folder to fetch our local html and css files
 app.use(require('express').static(__dirname + '/public'));
 
-// Setup view engine template 
+// Setup view engine template
 app.set('view engine', 'ejs');
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// Get root route 
+// Get root route
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-// Get chat route 
+// Get chat route
 app.get('/chat-page', (req, res) => {
-
   reqObject = req;
   res.render('chat');
 });
 
-// Initialize the socket connection 
+// Initialize the socket connection
 io.on('connection', socket => {
 
-  // listent and send message to all connected users 
+  let username;
+
+  // Get username 
+  socket.on('getUser', user => {
+    username = user;
+    console.log(username);
+  });
+
+  // listen and send welcome message to connect user
   socket.on('welcome', msg => {
-    socket.emit('welcome', utils.formatMsg('Yap bot', msg));
+    socket.emit('welcome', msgUtils.formatMsg('Yap bot', msg));
   });
 
-  // Send all previous msg in the stack 
-  socket.emit('restore', localMsg);
+  // listen and send notify message to all connected users
+  socket.broadcast.emit('init', 'User is connected to group chat');
 
-  // Listen when the user is send messages 
+  // Send all previous msg in the stack
+  // socket.emit('restore', localMsg);
+
+  // Listen when the user is send messages
   socket.on('brodcast', msg => {
-    localMsg.push(utils.formatMsg(utils.getUser(reqObject), msg));
-    console.log('Data pushed into stack ' + utils.formatMsg(utils.getUser(reqObject), msg));
-    io.emit('brodcast', utils.formatMsg(utils.getUser(reqObject), msg));
+    io.emit('brodcast', msgUtils.formatMsg(username, msg));
   });
 
-  // Listen when the user is disconneted 
+  // Listen when the user is disconneted
   socket.on('disconnect', () => {
     console.log('A user is disconnected!');
-    io.emit('end','A user is disconnected!');
+    io.emit('end', 'A user is disconnected!');
   });
 });
 
-// Init the port number 
+// Init the port number
 const PORT = process.env.PORT || 4000;
 
-// Init the server 
+// Init the server
 http.listen(PORT, () => {
   console.log('Server running on port #4000');
 });
