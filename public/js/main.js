@@ -3,7 +3,7 @@ var socket = io();
 $(document).ready(function() {
   $('form').submit(e => {
     e.preventDefault();
-    socket.emit('brod', $('#msg').val());
+    socket.emit('brodcast', $('#msg').val());
     $('#msg').val('');
     return false;
   });

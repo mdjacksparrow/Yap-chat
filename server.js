@@ -25,10 +25,10 @@ io.on('connection', socket => {
 
   socket.emit('restore', localMsg);
 
-  socket.on('brod', msg => {
+  socket.on('brodcast', msg => {
     localMsg.push(msg);
     console.log('Data pushed into stack ' + msg);
-    io.emit('brod', msg);
+    io.emit('brodcast', msg);
   });
 
   socket.on('disconnect', () => {
