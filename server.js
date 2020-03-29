@@ -28,12 +28,21 @@ app.get('/chat-page', (req, res) => {
 // Initialize the socket connection
 io.on('connection', socket => {
 
-  let username;
-
+  let username;  
+  
   // Get username 
   socket.on('getUser', user => {
     username = user;
     console.log(username);
+  
+    // listen and send notify message to all connected users
+    socket.broadcast.emit('init', `${username} is connected to group chat`);
+
+    // Insert the user into active array 
+    userUtils.insertUser(socket.id, username);
+
+    // Emit all user in the active section 
+    io.emit('online', userUtils.activeUsers);
   });
 
   // listen and send welcome message to connect user
@@ -41,21 +50,32 @@ io.on('connection', socket => {
     socket.emit('welcome', msgUtils.formatMsg('Yap bot', msg));
   });
 
-  // listen and send notify message to all connected users
-  socket.broadcast.emit('init', 'User is connected to group chat');
-
-  // Send all previous msg in the stack
-  // socket.emit('restore', localMsg);
-
   // Listen when the user is send messages
   socket.on('brodcast', msg => {
     io.emit('brodcast', msgUtils.formatMsg(username, msg));
   });
 
   // Listen when the user is disconneted
-  socket.on('disconnect', () => {
-    console.log('A user is disconnected!');
-    io.emit('end', 'A user is disconnected!');
+  socket.on('disconnect', async () => {
+
+    // To remove the current user 
+    const activeUsers = userUtils.activeUsers;
+    var i = activeUsers.length;
+    while(i--){
+      if( activeUsers[i] 
+        && activeUsers[i].hasOwnProperty('id') 
+        && (arguments.length > 2 && activeUsers[i]['id'] === socket.id ) ){ 
+          
+          activeUsers.splice(i,1);
+        }
+      }
+    console.log(userUtils.activeUsers);
+      
+    console.log(`A ${socket.id} is disconnected!`);
+    await io.emit('end', `${username} is disconnected!`);
+
+    // Emit all user in the active section 
+    await io.emit('online', activeUsers);
   });
 });
 

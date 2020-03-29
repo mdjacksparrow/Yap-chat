@@ -1,11 +1,34 @@
-
 // To store excited messages instead of using DB
-var localMsg = [];
+var activeUsers = [];
 
+// Insert into activeUsers array
+function insertUser(id, username) {
+  let user = {
+    id,
+    username
+  };
 
+  console.log(user);
 
-// Get the current username
-function getUser() {
+  activeUsers.push(user);
+
+  return user;
 }
 
-exports.getUser = getUser;
+// Get current user
+function delCurrentUser(attr,value){
+    var i = activeUsers.length;
+    while(i--){
+       if( activeUsers[i] 
+           && activeUsers[i].hasOwnProperty(attr) 
+           && (arguments.length > 2 && activeUsers[i][attr] === value ) ){ 
+
+           activeUsers.splice(i,1);
+       }
+    }
+    return activeUsers;
+}
+
+exports.insertUser = insertUser;
+exports.delCurrentUser = delCurrentUser;
+exports.activeUsers = activeUsers;

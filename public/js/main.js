@@ -3,30 +3,38 @@ var socket = io();
 const msgContainer = document.querySelector('.chat-messages');
 
 // Get the user name
-let { username } = Qs.parse(location.search,{
-  ignoreQueryPrefix : true
+let { username } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
 });
 
-console.log(username);
+// console.log(username);
 
-
-// Complete the loading page 
+// Complete the loading page
 $(document).ready(function() {
-
   // show user when connected to the group
   socket.emit('welcome', 'Welcome to YapChat!');
 
-  // Send the username to server 
+  // Send the username to server
   socket.emit('getUser', username);
+
+  // Listen all onlie users
+  socket.on('online', users => {
+    console.log('Online users are :');
+    
+    users.forEach(user => {
+      $('.users-container').html(
+        `<p class="users"> ${user.username} </p>`
+      );
+      console.log(user);
+    });
+  });
 
   // Listen when the server send by broadcast
   socket.on('init', info => {
     $('.chat-messages').append(
-      '<div class = "message">' +
-        `<p class="notify"> ${info} </p>` 
+      '<div class = "message">' + `<p class="notify"> ${info} </p>`
     );
-
-    });
+  });
 
   // Listen when the user is connected
   socket.on('welcome', info => {
@@ -37,7 +45,7 @@ $(document).ready(function() {
         `${info.message} </p>`
     );
 
-    // scroll down 
+    // scroll down
     msgContainer.scrollTop = msgContainer.scrollHeight;
   });
 
@@ -49,7 +57,6 @@ $(document).ready(function() {
     return false;
   });
 
-
   // Listen broadcast images
   socket.on('brodcast', msg => {
     $('.chat-messages').append(
@@ -59,7 +66,7 @@ $(document).ready(function() {
         `${msg.message} </p>`
     );
 
-    // scroll down 
+    // scroll down
     msgContainer.scrollTop = msgContainer.scrollHeight;
   });
 
@@ -68,8 +75,8 @@ $(document).ready(function() {
     $('.chat-messages').append(
       '<div class = "message">' + `<p class="notify">${info}</p>`
     );
-    
-    // scroll down 
+
+    // scroll down
     msgContainer.scrollTop = msgContainer.scrollHeight + 20;
   });
 });
