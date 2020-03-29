@@ -3,26 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
-      integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>ChatCord App</title>
+
+    <script src="https://kit.fontawesome.com/e2169f0192.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="../public/css/style.css" />
+    <title>Yap Chat</title>
   </head>
   <body>
     <div class="chat-container">
       <header class="chat-header">
-        <h1><i class="fas fa-smile"></i> ChatCord</h1>
-        <a href="index.html" class="btn">Leave Room</a>
+        <h1><i class="fas fa-layer-group"></i> Yap Chat</h1>
+        <a href="index.html" class="btn"><i class="fas fa-share-square"></i> Leave Group</a>
       </header>
       <main class="chat-main">
         <div class="chat-sidebar">
-          <h3><i class="fas fa-comments"></i> Room Name:</h3>
-          <h2 id="room-name">JavaScript</h2>
-          <h3><i class="fas fa-users"></i> Users</h3>
+          <h3><i class="fas fa-house-user"></i> Group Name</h3>
+          <h2 id="room-name">Friends Forever</h2>
+          <h3><i class="fas fa-user-friends"></i> Members</h3>
           <ul id="users">
             <li>Brad</li>
             <li>John</li>
@@ -31,7 +28,11 @@
             <li>Mike</li>
           </ul>
         </div>
-        <div class="chat-messages"></div>
+        <div class="chat-messages">
+          <div class = "message">
+            <p class="notify">User is connected!</p>
+          </div>
+        </div>
       </main>
       <div class="chat-form-container">
         <form id="chat-form">
@@ -48,7 +49,7 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="lib/jquery/jquery.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../public/lib/jquery/jquery.min.js"></script>
+    <script src="../public/js/main.js"></script>
   </body>
 </html>
