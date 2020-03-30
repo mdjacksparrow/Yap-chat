@@ -5,13 +5,16 @@
 
 ## Updated Features @Version 0.11
 - Can view the online status
+- updated UI in client-side
 
 ## Current Features
 
 - Send group messages(only)
-- Can the username for which the user is posted.
-- Can you know if the user is joined or leave.
+- you can know if the user is joined or leave.
 - Can view the online status.
+
+## Updated Features @Version 0.10
+-  Basic msg send funcationlity
 
 ## Future Update
 
