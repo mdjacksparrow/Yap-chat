@@ -63,11 +63,14 @@ $(document).ready(function() {
       '<div class = "message">' +
         `<p class="meta"> ${msg.username} <span> ${msg.time} </span> </p>` +
         '<p class="text">' +
-        `${msg.message} </p>`
+        `${msg.message} </p> </div>`
     );
 
     // scroll down
-    msgContainer.scrollTop = msgContainer.scrollHeight;
+    msgContainer.scrollTop = msgContainer.scrollHeight + 500;
+    console.log(msgContainer.scrollHeight)
+    console.log(msgContainer.scrollTop)
+
   });
 
   // Show msg when the user is disconnected
