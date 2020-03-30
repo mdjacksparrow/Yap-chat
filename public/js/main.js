@@ -11,22 +11,44 @@ let { username } = Qs.parse(location.search, {
 
 // Complete the loading page
 $(document).ready(function() {
+
   // show user when connected to the group
   socket.emit('welcome', 'Welcome to YapChat!');
-
+  
   // Send the username to server
   socket.emit('getUser', username);
+  
+  // To show the online users slide effect 
+  $('#online').click(
+    function() {
+      $("#online-users").animate({
+        width: "toggle"
+    });
+  });
 
   // Listen all onlie users
   socket.on('online', users => {
     console.log('Online users are :');
     
+    // create a new div element 
+    var ul = document.createElement("ul");
+    let onlineUsers = document.getElementById("online-users");
+
     users.forEach(user => {
-      $('.users-container').html(
-        `<p class="users"> ${user.username} </p>`
-      );
+      let li = document.createElement("li");
+      var newUser = document.createTextNode(user.username);
+      li.append(newUser); 
+      ul.appendChild(li); 
       console.log(user);
+
+      // Remove All exited users 
+      while(onlineUsers.firstChild){
+          onlineUsers.removeChild(onlineUsers.firstChild);
+      }
     });
+
+    // show the updated online users 
+    onlineUsers.append(ul);
   });
 
   // Listen when the server send by broadcast
