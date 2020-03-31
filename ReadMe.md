@@ -1,7 +1,13 @@
 # This is our 1st Chat based application by using sokets with node express application
 
-## version 0.11
+## version 0.12
 ## Author : Mdjack
+
+## Updated Features @Version 0.12
+- Restore message functionality
+- Bug fixed
+
+## version 0.11
 
 ## Updated Features @Version 0.11
 - Can view the online status
@@ -12,6 +18,7 @@
 - Send group messages(only)
 - you can know if the user is joined or leave.
 - Can view the online status.
+- Restore message functionality
 
 ## Updated Features @Version 0.10
 -  Basic msg send funcationlity
