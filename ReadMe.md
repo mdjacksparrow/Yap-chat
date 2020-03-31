@@ -1,13 +1,13 @@
 # This is our 1st Chat based application by using sokets with node express application
 
-## version 0.12
+## version v0.12-alpha
 ## Author : Mdjack
 
 ## Updated Features @Version 0.12
 - Restore message functionality
 - Bug fixed
 
-## version 0.11
+## version v0.11-alpha
 
 ## Updated Features @Version 0.11
 - Can view the online status
@@ -20,7 +20,7 @@
 - Can view the online status.
 - Restore message functionality
 
-## Updated Features @Version 0.10
+## Updated Features @Version v0.10-alpha
 -  Basic msg send funcationlity
 
 ## Future Update
