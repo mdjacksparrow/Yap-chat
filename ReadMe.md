@@ -36,3 +36,6 @@
 - node @12 and above
 - Express framework
 - Ejs template engine(ejs.co)
+- Jquery Plugins
+- loading animation plugin
+- MongoDB
