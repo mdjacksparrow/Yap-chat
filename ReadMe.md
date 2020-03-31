@@ -1,4 +1,4 @@
-# This is our 1st Chat based application by using sokets with node express application
+# This is our 1st Chat based application by using sockets with node express application
 
 ## version v0.12-alpha
 ## Author : Mdjack
