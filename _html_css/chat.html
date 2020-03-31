@@ -6,10 +6,17 @@
 
     <script src="https://kit.fontawesome.com/e2169f0192.js" crossorigin="anonymous"></script>
     
+    <link rel="stylesheet" href="../public/lib/loading-plugin/waitMe.cs">
     <link rel="stylesheet" href="../public/css/style.css" />
     <title>Yap Chat</title>
   </head>
-  <body>
+  <body class="waitMe_body">
+
+    <!-- Loading animation  -->
+    <div class="waitMe_container img" style="background:#fff">
+        <div style="background:url('../public/lib/loading-plugin/img.svg')"></div>
+    </div>
+
     <div class="chat-container">
       <header class="chat-header">
         <h1><i class="fas fa-layer-group"></i> Yap Chat</h1>
@@ -31,7 +38,7 @@
             <li>mohamed</li>
           </ul>
         </div>
-        
+
         <div class="chat-messages">
           <div class = "message">
             <p class="notify">User is connected!</p>
@@ -42,7 +49,7 @@
           </div>
           <div class = "message">
             <p><span class="meta"> User <span> 9:10 pm </span> </p>
-            <p class="text">This is Messages</p> 
+            <p class="text p-0 m-0">This is Messages</p> 
           </div>
           <div class = "message">
             <p><span class="meta"> User <span> 9:10 pm </span> </p>
@@ -66,6 +73,7 @@
 
     <!-- <script src="/socket.io/socket.io.js"></script> -->
     <script src="../public/lib/jquery/jquery.min.js"></script>
+    <script src="../public/lib/loading-plugin/waitMe.js"></script>
     <script src="../public/js/test.js"></script>
   </body>
 </html>

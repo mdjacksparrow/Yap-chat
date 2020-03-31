@@ -1,6 +1,14 @@
 // To store excited messages instead of using DB
 var activeUsers = [];
 
+// Temporary storage 
+var storage = [];
+
+// Insert msg into store
+function insertMsg(id, username, msg){
+  storage.push(msgStore(id, username, msg));
+}
+
 // Insert into activeUsers array
 function insertUser(id, username) {
   let user = {
@@ -29,6 +37,19 @@ function delCurrentUser(attr,value){
     return activeUsers;
 }
 
+// Store the msg and user then return by object 
+function msgStore(id, username, msg){
+  return {
+    id,
+    username,
+    msg
+  }
+}
+
+// Functions 
 exports.insertUser = insertUser;
 exports.delCurrentUser = delCurrentUser;
+exports.insertMsg = insertMsg;
+// Variables 
 exports.activeUsers = activeUsers;
+exports.storage = storage;

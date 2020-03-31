@@ -12,7 +12,7 @@ let { username } = Qs.parse(location.search, {
 // Complete the loading page
 $(document).ready(function() {
   // show user when connected to the group
-  socket.emit('welcome', 'Welcome to YapChat!');
+  socket.emit('welcome', 'Welcome to All');
 
   // Send the username to server
   socket.emit('getUser', username);
@@ -73,30 +73,46 @@ $(document).ready(function() {
   $('form').submit(e => {
     e.preventDefault();
     socket.emit('brodcast', $('#msg').val());
+    
     $('#msg').val('');
     return false;
   });
 
   // Listen broadcast images
   socket.on('brodcast', msg => {
-    $('.chat-messages').append(
-      '<div class = "message">' +
-        `<p class="meta"> ${msg.username} <span> ${msg.time} </span> </p>` +
-        '<p class="text">' +
-        `${msg.message} </p> </div>`
-    );
+
+    // When the page corrupted to send the  username(bug)
+    if(msg.username === undefined){  
+      // location.reload();
+    }// Else normally fetch from storage
+    else{
+      $('.chat-messages').append(
+        '<div class = "message">' +
+          `<p class="meta"> ${msg.username} <span> ${msg.time} </span> </p>` +
+          '<p class="text">' +
+          `${msg.message} </p> </div>`
+      );
+    }
 
     // scroll down
     msgContainer.scrollTop = msgContainer.scrollHeight + 500;
-    console.log(msgContainer.scrollHeight);
-    console.log(msgContainer.scrollTop);
+
+    // Focus into type msg 
+    $('#msg').focus();
   });
 
   // Show msg when the user is disconnected
-  socket.on('end', info => {
-    $('.chat-messages').append(
-      '<div class = "message">' + `<p class="notify">${info}</p>`
-    );
+  socket.on('end', user => {
+    console.log(user);
+    if(user === undefined){
+      $('.chat-messages').append(
+        '<div class = "message">' + `<p class="notify">User is Disconnected</p>`
+      );
+    }else{
+      $('.chat-messages').append(
+        '<div class = "message">' + `<p class="notify">${user} is Disconnected</p>`
+      );
+    }
 
     // scroll down
     msgContainer.scrollTop = msgContainer.scrollHeight + 20;

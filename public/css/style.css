@@ -5,7 +5,7 @@
 	--dark-color-b: #7386ff;
 	--light-color: #e6e9ff;
 	--success-color: #5cb85c;
-	--error-color: #d9534f;
+	--error-color: #7a6a69;
 }
 
 * {
@@ -84,21 +84,21 @@ a {
 }
 
 .chat-sidebar h2 {
-	/* font-size: 20px; */
+	font-size: 1.5rem;
 	background: rgba(0, 0, 0, 0.1);
+	text-align: center;
 	padding: 10px;
 	margin-bottom: 20px;
 }
 
 .chat-sidebar h3 {
 	text-align: center;
-
+	font-size: 1.5rem;
 	margin-bottom: 15px;
 }
 
 .chat-sidebar .fa-house-user{
 	text-align: center;
-
 	padding: 1rem;
 }
 
@@ -260,6 +260,10 @@ a {
 
 	.chat-sidebar #online-users{
 		display: none;
+	}
+
+	.chat-header h1{
+		font-size: 1.4rem;
 	}
 
 	.chat-sidebar ul li{

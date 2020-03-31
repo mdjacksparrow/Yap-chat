@@ -4,6 +4,9 @@ const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const userUtils = require('./utils/users');
 const msgUtils = require('./utils/messages');
+const db = require('./db/Msg');
+const Modal = require('./db/user_module');
+
 
 // Set public as a local folder to fetch our local html and css files
 app.use(require('express').static(__dirname + '/public'));
@@ -13,6 +16,8 @@ app.set('view engine', 'ejs');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
+
+db.retrieveMsg()
 
 // Get root route
 app.get('/', (req, res) => {
@@ -32,6 +37,7 @@ io.on('connection', socket => {
   
   // Get username 
   socket.on('getUser', user => {
+    // Make the user global assign into global variable 
     username = user;
     console.log(username);
   
@@ -40,6 +46,7 @@ io.on('connection', socket => {
 
     // Insert the user into active array 
     userUtils.insertUser(socket.id, username);
+    
 
     // Emit all user in the active section 
     io.emit('online', userUtils.activeUsers);
@@ -48,11 +55,26 @@ io.on('connection', socket => {
   // listen and send welcome message to connect user
   socket.on('welcome', msg => {
     socket.emit('welcome', msgUtils.formatMsg('Yap bot', msg));
-  });
 
+    Modal.User.find({}, (err, docs) => {
+      if(err) throw err;
+      docs.forEach(restore => {
+        socket.emit('brodcast', msgUtils.formatMsg(restore.username, restore.msg));
+        console.log(restore);
+      });
+    });
+    
+  });
+  
   // Listen when the user is send messages
-  socket.on('brodcast', msg => {
-    io.emit('brodcast', msgUtils.formatMsg(username, msg));
+  socket.on('brodcast', async msg => {
+    
+    // store into db 
+    await db.insertOne(username, msg);
+    
+    console.log(db.retrieveMsg());
+    
+    await io.emit('brodcast', msgUtils.formatMsg(username, msg));
   });
 
   // Listen when the user is disconneted
@@ -72,7 +94,7 @@ io.on('connection', socket => {
     console.log(userUtils.activeUsers);
       
     console.log(`A ${socket.id} is disconnected!`);
-    await io.emit('end', `${username} is disconnected!`);
+    await io.emit('end', username);
 
     // Emit all user in the active section 
     await io.emit('online', activeUsers);
