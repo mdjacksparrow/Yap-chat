@@ -1,7 +1,13 @@
-# This is our 1st Chat based application by using sokets with node express application
+# This is our 1st Chat based application by using sockets with node express application
 
-## version 0.11
+## version v0.12-alpha
 ## Author : Mdjack
+
+## Updated Features @Version 0.12
+- Restore message functionality
+- Bug fixed
+
+## version v0.11-alpha
 
 ## Updated Features @Version 0.11
 - Can view the online status
@@ -12,8 +18,9 @@
 - Send group messages(only)
 - you can know if the user is joined or leave.
 - Can view the online status.
+- Restore message functionality
 
-## Updated Features @Version 0.10
+## Updated Features @Version v0.10-alpha
 -  Basic msg send funcationlity
 
 ## Future Update
@@ -29,3 +36,6 @@
 - node @12 and above
 - Express framework
 - Ejs template engine(ejs.co)
+- Jquery Plugins
+- loading animation plugin
+- MongoDB
