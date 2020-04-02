@@ -132,8 +132,9 @@ function getTime(){
     new Date()
       .toLocaleString()
       .split(' ')[1]
+      
       .split(':')[0]
-  }:${
+   - 12}:${
     new Date()
       .toLocaleString()
       .split(' ')[1]
