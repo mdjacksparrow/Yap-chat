@@ -84,7 +84,7 @@ $(document).ready(function() {
 
     // When the page corrupted to send the  username(bug)
     if(msg.username === undefined || msg.username === null){  
-      location.reload();
+      // location.reload();
     }// Else normally fetch from storage
     else{
       $('.chat-messages').append(
@@ -142,7 +142,7 @@ function getTime(){
   } ${new Date().toLocaleString().split(' ')[2]}`;
 }
 
-
+// Return object 
 function putUserMsg(msg, time){
   return{
       msg,
