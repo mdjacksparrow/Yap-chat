@@ -1,7 +1,12 @@
 # This is our 1st Chat based application by using sockets with node express application
 
-## version v0.12-alpha
 ## Author : Mdjack
+## version v0.13-alpha
+
+## Updated Features @Version 0.13
+- Time Showing problem was fixed
+
+## version v0.12-alpha
 
 ## Updated Features @Version 0.12
 - Restore message functionality
@@ -19,6 +24,7 @@
 - you can know if the user is joined or leave.
 - Can view the online status.
 - Restore message functionality
+- Can view the message arrived time.
 
 ## Updated Features @Version v0.10-alpha
 -  Basic msg send funcationlity
@@ -27,15 +33,25 @@
 
 - Create login Id and password
 - Private Messages
-- See who is online or not
 - And more
 
 ## Application Dependencies
-- socket.io
-- Qn CDN
-- node @12 and above
-- Express framework
+
+### Front-end
+- HTML5 and above
+- CSS3
+- Javascript
 - Ejs template engine(ejs.co)
+- Query String CDN(simplify purpose)
+- Bootsrap4(bootsrap.org)
 - Jquery Plugins
-- loading animation plugin
+1.Page loading animation plugin
+- socket.io(for Bi-directional Communication)
+
+### Back-end
+- node @12 and above
+- Native Node modules(http)
+- Express framework
+
+### Database
 - MongoDB
