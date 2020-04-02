@@ -70,9 +70,10 @@ $(document).ready(function() {
   });
 
   // Submit the form
-  $('form').submit(e => {
+  $('form').submit(async e => {
     e.preventDefault();
-    socket.emit('brodcast', putUserMsg( $('#msg').val(), getTime()));
+    let time = await getTime();
+    socket.emit('brodcast', putUserMsg( $('#msg').val(), time));
     
     $('#msg').val('');
     return false;
@@ -82,8 +83,8 @@ $(document).ready(function() {
   socket.on('brodcast', msg => {
 
     // When the page corrupted to send the  username(bug)
-    if(msg.username === undefined){  
-      // location.reload();
+    if(msg.username === undefined || msg.username === null){  
+      location.reload();
     }// Else normally fetch from storage
     else{
       $('.chat-messages').append(

@@ -72,7 +72,7 @@ io.on('connection', socket => {
   socket.on('brodcast', async cobject => {
     
     // store into db 
-    await db.insertOne(username, cobject.msg , msgUtils.getTime());
+    await db.insertOne(username, cobject.msg , cobject.time);
         
     await io.emit('brodcast', msgUtils.formatMsg(username, cobject.msg, cobject.time));
   });
