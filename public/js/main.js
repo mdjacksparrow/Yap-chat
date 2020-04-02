@@ -72,7 +72,18 @@ $(document).ready(function() {
   // Submit the form
   $('form').submit(async e => {
     e.preventDefault();
-    let time = await getTime();
+    let time ;
+    // check the current brower is chrome or not(mobile view)
+    if((!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) && (window.screen.width < 756)){
+      time = await getTime(12);
+      console.log('in mobile' + time);
+      
+    }else{
+      // otherwise not needed 
+      time = await getTime(0);
+      console.log('in lap' + time);
+    }
+    
     socket.emit('brodcast', putUserMsg( $('#msg').val(), time));
     
     $('#msg').val('');
@@ -83,7 +94,7 @@ $(document).ready(function() {
   socket.on('brodcast', msg => {
 
     // When the page corrupted to send the  username(bug)
-    if(msg.username === undefined || msg.username === null){  
+    if(0){ 
       // location.reload();
     }// Else normally fetch from storage
     else{
@@ -121,7 +132,7 @@ $(document).ready(function() {
 });
 
 
-function getTime(){
+function getTime(minus){
   // For reference 
   // Create instance of Date and get the notation 
   // const notation = new Date().toLocaleString().split(' ')[2];
@@ -134,7 +145,7 @@ function getTime(){
       .toLocaleString()
       .split(' ')[1]
       .split(':')[0]
-  }:${
+    - minus}:${
     new Date()
       .toLocaleString()
       .split(' ')[1]
