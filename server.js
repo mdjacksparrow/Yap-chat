@@ -53,8 +53,10 @@ io.on('connection', socket => {
   });
 
   // listen and send welcome message to connect user
-  socket.on('welcome', cobject => {
-    socket.emit('welcome', msgUtils.formatMsg('Yap bot', cobject.msg, cobject.time));
+  socket.on('welcome', msg => {
+    console.log(msg);
+    
+    socket.emit('welcome', {username: 'Yapbot', msg: msg} );
 
     Modal.User.find({}, (err, docs) => {
       if(err) throw err;

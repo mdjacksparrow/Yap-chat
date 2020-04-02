@@ -12,7 +12,7 @@ let { username } = Qs.parse(location.search, {
 // Complete the loading page
 $(document).ready(function() {
   // show user when connected to the group
-  socket.emit('welcome', putUserMsg('Welcome to All', getTime()));
+  socket.emit('welcome', 'Welcome to All');
 
   // Send the username to server
   socket.emit('getUser', username);
@@ -61,8 +61,8 @@ $(document).ready(function() {
     $('.chat-messages').append(
       '<div class = "message">' +
         '<p class="text">' +
-        `<p class="meta">${info.username}<span> ${info.time} </span> </p>` +
-        `${info.message} </p>`
+        `<p class="meta">${info.username}</p>` +
+        `${info.msg} </p>`
     );
 
     // scroll down
@@ -132,9 +132,8 @@ function getTime(){
     new Date()
       .toLocaleString()
       .split(' ')[1]
-      
       .split(':')[0]
-   - 12}:${
+  }:${
     new Date()
       .toLocaleString()
       .split(' ')[1]
