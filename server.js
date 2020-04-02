@@ -54,12 +54,12 @@ io.on('connection', socket => {
 
   // listen and send welcome message to connect user
   socket.on('welcome', msg => {
-    socket.emit('welcome', msgUtils.formatMsg('Yap bot', msg));
+    socket.emit('welcome', msgUtils.formatMsg('Yap bot', msg, 'now'));
 
     Modal.User.find({}, (err, docs) => {
       if(err) throw err;
       docs.forEach(restore => {
-        socket.emit('brodcast', msgUtils.formatMsg(restore.username, restore.msg));
+        socket.emit('brodcast', msgUtils.formatMsg(restore.username, restore.msg, restore.time));
         console.log(restore);
       });
     });
@@ -70,11 +70,11 @@ io.on('connection', socket => {
   socket.on('brodcast', async msg => {
     
     // store into db 
-    await db.insertOne(username, msg);
+    await db.insertOne(username, msg, msgUtils.getTime());
     
     console.log(db.retrieveMsg());
     
-    await io.emit('brodcast', msgUtils.formatMsg(username, msg));
+    await io.emit('brodcast', msgUtils.formatMsg(username, msg, msgUtils.getTime()));
   });
 
   // Listen when the user is disconneted

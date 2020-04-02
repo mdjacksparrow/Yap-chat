@@ -14,6 +14,10 @@ const userMsg = new Schema({
   msg: {
     type: String,
     required: [true]
+  },
+  time: {
+    type : String,
+    required: [true]
   }
 });
 exports.User = new mongoose.model('message-storage', userMsg);

@@ -1,12 +1,12 @@
 const Modal = require('./user_module');
 
 // pass a spread of docs and a callback
-exports.insertOne = (username, msg) => {
-  Modal.User.create({username: username, msg: msg }, function(
+exports.insertOne = (username, msg, time) => {
+  Modal.User.create({username: username, msg: msg, time, time }, function(
     err,
     docs
   ) {
-    if (err) throw err;
+    if (err) {console.log('something went wrong!')};
     console.log('Inser msg are ', docs);
   });
 };
