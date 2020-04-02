@@ -1,9 +1,9 @@
 # This is our 1st Chat based application by using sockets with node express application
 
 ## Author : Mdjack
-## version v0.13-alpha
+## version v0.12.1-alpha
 
-## Updated Features @Version 0.13
+## Updated Features @Version 0.12.1
 - Time Showing problem was fixed
 
 ## version v0.12-alpha
