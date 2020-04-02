@@ -53,8 +53,8 @@ io.on('connection', socket => {
   });
 
   // listen and send welcome message to connect user
-  socket.on('welcome', msg => {
-    socket.emit('welcome', msgUtils.formatMsg('Yap bot', msg, 'now'));
+  socket.on('welcome', cobject => {
+    socket.emit('welcome', msgUtils.formatMsg('Yap bot', cobject.msg, cobject.time));
 
     Modal.User.find({}, (err, docs) => {
       if(err) throw err;
@@ -67,14 +67,12 @@ io.on('connection', socket => {
   });
   
   // Listen when the user is send messages
-  socket.on('brodcast', async msg => {
+  socket.on('brodcast', async cobject => {
     
     // store into db 
-    await db.insertOne(username, msg, msgUtils.getTime());
-    
-    console.log(db.retrieveMsg());
-    
-    await io.emit('brodcast', msgUtils.formatMsg(username, msg, msgUtils.getTime()));
+    await db.insertOne(username, cobject.msg , msgUtils.getTime());
+        
+    await io.emit('brodcast', msgUtils.formatMsg(username, cobject.msg, cobject.time));
   });
 
   // Listen when the user is disconneted

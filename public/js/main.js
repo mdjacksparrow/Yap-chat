@@ -12,7 +12,7 @@ let { username } = Qs.parse(location.search, {
 // Complete the loading page
 $(document).ready(function() {
   // show user when connected to the group
-  socket.emit('welcome', 'Welcome to All');
+  socket.emit('welcome', putUserMsg('Welcome to All', getTime()));
 
   // Send the username to server
   socket.emit('getUser', username);
@@ -72,7 +72,7 @@ $(document).ready(function() {
   // Submit the form
   $('form').submit(e => {
     e.preventDefault();
-    socket.emit('brodcast', $('#msg').val());
+    socket.emit('brodcast', putUserMsg( $('#msg').val(), getTime()));
     
     $('#msg').val('');
     return false;
@@ -118,3 +118,33 @@ $(document).ready(function() {
     msgContainer.scrollTop = msgContainer.scrollHeight + 20;
   });
 });
+
+
+function getTime(){
+  // For reference 
+  // Create instance of Date and get the notation 
+  // const notation = new Date().toLocaleString().split(' ')[2];
+
+  //split the time zone
+  // const timearr = new Date().toLocaleString().split(' ')[1].split(':');
+
+  return `${
+    new Date()
+      .toLocaleString()
+      .split(' ')[1]
+      .split(':')[0]
+  }:${
+    new Date()
+      .toLocaleString()
+      .split(' ')[1]
+      .split(':')[1]
+  } ${new Date().toLocaleString().split(' ')[2]}`;
+}
+
+
+function putUserMsg(msg, time){
+  return{
+      msg,
+      time
+  }
+}
