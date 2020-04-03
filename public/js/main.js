@@ -70,23 +70,28 @@ $(document).ready(function() {
   });
 
   // Submit the form
-  $('form').submit(async e => {
+  $('form').submit(e => {
     e.preventDefault();
-    let time = await getTime();
-    socket.emit('brodcast', putUserMsg( $('#msg').val(), time));
-    
+
+    // Get time interms of 12 hours with am or pm
+    const time = new Date().toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    });
+    socket.emit('brodcast', putUserMsg($('#msg').val(), time));
+
     $('#msg').val('');
     return false;
   });
 
   // Listen broadcast images
   socket.on('brodcast', msg => {
-
     // When the page corrupted to send the  username(bug)
-    if(0){ 
+    if (0) {
       // location.reload();
-    }// Else normally fetch from storage
-    else{
+    } // Else normally fetch from storage
+    else {
       $('.chat-messages').append(
         '<div class = "message">' +
           `<p class="meta"> ${msg.username} <span> ${msg.time} </span> </p>` +
@@ -98,20 +103,21 @@ $(document).ready(function() {
     // scroll down
     msgContainer.scrollTop = msgContainer.scrollHeight + 500;
 
-    // Focus into type msg 
+    // Focus into type msg
     $('#msg').focus();
   });
 
   // Show msg when the user is disconnected
   socket.on('end', user => {
     console.log(user);
-    if(user === undefined){
+    if (user === undefined) {
       $('.chat-messages').append(
         '<div class = "message">' + `<p class="notify">User is Disconnected</p>`
       );
-    }else{
+    } else {
       $('.chat-messages').append(
-        '<div class = "message">' + `<p class="notify">${user} is Disconnected</p>`
+        '<div class = "message">' +
+          `<p class="notify">${user} is Disconnected</p>`
       );
     }
 
@@ -120,10 +126,9 @@ $(document).ready(function() {
   });
 });
 
-
-function getTime(){
-  // For reference 
-  // Create instance of Date and get the notation 
+function getTime() {
+  // For reference
+  // Create instance of Date and get the notation
   // const notation = new Date().toLocaleString().split(' ')[2];
 
   //split the time zone
@@ -142,10 +147,10 @@ function getTime(){
   } ${new Date().toLocaleString().split(' ')[2]}`;
 }
 
-// Return object 
-function putUserMsg(msg, time){
-  return{
-      msg,
-      time
-  }
+// Return object
+function putUserMsg(msg, time) {
+  return {
+    msg,
+    time
+  };
 }
