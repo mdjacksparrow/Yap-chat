@@ -69,7 +69,7 @@ $(document).ready(function() {
     msgContainer.scrollTop = msgContainer.scrollHeight;
   });
 
-  // Submit the form
+   // Submit the form
   $('form').submit(e => {
     e.preventDefault();
 
