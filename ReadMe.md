@@ -9,7 +9,7 @@
 ## version v0.12.1-alpha
 
 ## Updated Features @Version 0.12.1
-- Time Showing problem was fixed
+- Time Showing problem was fixed except chrome browser
 
 ## version v0.12-alpha
 
